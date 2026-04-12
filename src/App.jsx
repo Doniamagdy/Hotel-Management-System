@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient.js";
-
+import AddGuest from "./pages/AddGuest/AddGuest.jsx";
+import "./App.css"
 
 function App() {
   const [guestName, setIGuestName] = useState([]);
@@ -20,10 +21,13 @@ function App() {
   }
 
   return (
-    <div>
+    <div >
       {guestName.map((guest) => (
         <p key={guest.id}>{guest.guest_full_name}</p>
       ))}
+
+
+      <AddGuest/>
     </div>
   );
 }
