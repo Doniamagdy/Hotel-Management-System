@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient.js";
-import AddGuest from "./pages/AddGuest/AddGuest.jsx";
-import "./App.css"
+import AddGuest from "./features/guests/AddGuest/AddGuest.jsx";
+import "./App.css";
 
 function App() {
   const [guestName, setIGuestName] = useState([]);
 
-// console.log(supabase.supabaseUrl);
-
+  // console.log(supabase.supabaseUrl);
 
   useEffect(() => {
     getGuestName();
@@ -21,13 +20,12 @@ function App() {
   }
 
   return (
-    <div >
+    <div>
       {guestName.map((guest) => (
         <p key={guest.id}>{guest.guest_full_name}</p>
       ))}
 
-
-      <AddGuest/>
+      <AddGuest />
     </div>
   );
 }
