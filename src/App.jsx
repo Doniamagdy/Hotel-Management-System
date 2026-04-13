@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient.js";
 import AddGuest from "./features/guests/AddGuest/AddGuest.jsx";
 import "./App.css";
+import Navbar from "./layouts/Navbar/Navbar.jsx";
 
 function App() {
   const [guestName, setIGuestName] = useState([]);
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <div>
+    <Navbar/>
       {guestName.map((guest) => (
         <p key={guest.id}>{guest.guest_full_name}</p>
       ))}
