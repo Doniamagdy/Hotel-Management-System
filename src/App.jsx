@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient.js";
 import AddGuest from "./features/guests/AddGuest/AddGuest.jsx";
 import "./App.css";
 import Navbar from "./layouts/Navbar/Navbar.jsx";
+import Footer from "./layouts/Footer/Footer.jsx";
 
 function App() {
   const [guestName, setIGuestName] = useState([]);
@@ -28,6 +29,8 @@ function App() {
       ))}
 
       <AddGuest />
+
+      <Footer/>
     </div>
   );
 }
