@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 const NAV_LINKS = [
   { label: "Rooms", href: "#" },
@@ -142,8 +144,8 @@ function Navbar() {
         <ul className="hidden lg:flex items-center list-none gap-0 m-0 p-0">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
+              <Link
+                to={"/add-guest"}
                 onClick={() => setActiveLink(link.label)}
                 className={`nav-link-underline font-jost no-underline uppercase px-4 py-2 font-normal ${
                   activeLink === link.label ? "active" : ""
@@ -158,8 +160,8 @@ function Navbar() {
                   transition: "color 0.2s",
                 }}
               >
-                {link.label}
-              </a>
+                Add guest
+              </Link>
             </li>
           ))}
 
@@ -175,8 +177,8 @@ function Navbar() {
 
           {NAV_LINKS_SECONDARY.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
+              <Link
+                to={"/fetch-guest"}  
                 onClick={() => setActiveLink(link.label)}
                 className={`nav-link-underline font-jost no-underline uppercase px-4 py-2 font-normal ${
                   activeLink === link.label ? "active" : ""
@@ -191,8 +193,8 @@ function Navbar() {
                   transition: "color 0.2s",
                 }}
               >
-                {link.label}
-              </a>
+          Fetch guest
+              </Link>
             </li>
           ))}
         </ul>
