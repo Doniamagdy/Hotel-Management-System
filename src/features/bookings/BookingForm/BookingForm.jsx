@@ -1,73 +1,84 @@
 import React, { useState } from "react";
 
 function BookingForm() {
-  const [form, setForm] = useState({
-    full_name: "",
-    email: "",
-    phone: "",
-    date: "",
-    notes: "",
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // هنا هتنادي API
-    console.log(form);
-  };
+ 
+  
+  
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Book Now</h2>
+  <div className="max-w-sm mx-auto mt-12 p-6 border border-gray-200 rounded-xl bg-white shadow-sm flex flex-col gap-4">
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Guest Info */}
-        <input
-          type="text"
-          name="full_name"
-          placeholder="Full Name"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
+      <h2 className="text-xl font-semibold text-center">
+        Book Your Stay
+      </h2>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
+      {/* Room Selection */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium">Select Room</label>
+        <select className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+          <option>Deluxe Room - $100/night</option>
+          <option>Standard Room - $70/night</option>
+          <option>Suite - $150/night</option>
+        </select>
+      </div>
 
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-
-        {/* Booking Info */}
+      {/* Check-in */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium">Check-in</label>
         <input
           type="date"
-          name="date"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
+      </div>
 
-        <textarea
-          name="notes"
-          placeholder="Notes"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
+      {/* Check-out */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium">Check-out</label>
+        <input
+          type="date"
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
+      </div>
 
-        <button className="w-full bg-black text-white py-2 rounded">
-          Confirm Booking
-        </button>
-      </form>
+      {/* Adults */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium">Adults</label>
+        <div className="flex items-center gap-3">
+          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+            -
+          </button>
+          <span className="text-base font-semibold">1</span>
+          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+            +
+          </button>
+        </div>
+      </div>
+
+       {/* Children */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium">Children</label>
+        <div className="flex items-center gap-3">
+          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+            -
+          </button>
+          <span className="text-base font-semibold">1</span>
+          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* Total Price */}
+      <div className="mt-2 p-3 bg-gray-50 rounded-lg flex justify-between text-base">
+        <span>Total Price</span>
+        <span className="font-semibold">$0</span>
+      </div>
+
+      {/* Button */}
+      <button className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition">
+        Book Now
+      </button>
+
     </div>
   );
 }
