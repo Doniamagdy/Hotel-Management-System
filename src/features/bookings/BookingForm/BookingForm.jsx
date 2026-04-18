@@ -1,9 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import  {insertBookingDetails} from "../booking.service";
+
 
 function BookingForm() {
- 
+
+const[checkIn , setCheckIn]= useState("")
+
+const[checkOut , setCheckOut]= useState("")
+
+const[adultsCount , setAdultsCount]= useState(0)
+
+const[childrenCount , setChildrenCount]= useState(0)
+
+
+    function handleBookingSubmit(){
+    insertBookingDetails({checkIn, checkOut , adultsCount ,childrenCount})
+    }
+
+   function calcDays(checkout, checkin){
+
+   
+    const reservationEndDay = new Date(checkout)
+    const reservationStartDay = new Date(checkin)
+     const accommodationDays =( reservationEndDay  - reservationStartDay) / (1000 * 60 * 60 * 24)
+   
+     const daysInHotel = Math.ceil(accommodationDays)
+     console.log(daysInHotel);
+     return daysInHotel
+   }
+
+   
+ const x =  calcDays(checkOut, checkIn)
   
-  
+   
 
   return (
   <div className="max-w-sm mx-auto mt-12 p-6 border border-gray-200 rounded-xl bg-white shadow-sm flex flex-col gap-4">
@@ -26,6 +55,7 @@ function BookingForm() {
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Check-in</label>
         <input
+          onChange={(e)=>{setCheckIn(e.target.value)}}
           type="date"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
@@ -35,6 +65,8 @@ function BookingForm() {
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Check-out</label>
         <input
+        onChange={(e)=>{setCheckOut(e.target.value)}}
+
           type="date"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
@@ -44,11 +76,11 @@ function BookingForm() {
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Adults</label>
         <div className="flex items-center gap-3">
-          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button  onClick={()=> setAdultsCount( adultsCount - 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
             -
           </button>
-          <span className="text-base font-semibold">1</span>
-          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <span className="text-base font-semibold">{adultsCount}</span>
+          <button onClick={()=> setAdultsCount( adultsCount + 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
             +
           </button>
         </div>
@@ -58,11 +90,11 @@ function BookingForm() {
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Children</label>
         <div className="flex items-center gap-3">
-          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button  onClick={()=> setChildrenCount( childrenCount - 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
             -
           </button>
-          <span className="text-base font-semibold">1</span>
-          <button className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <span className="text-base font-semibold">{childrenCount}</span>
+          <button onClick={()=> setChildrenCount( childrenCount + 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
             +
           </button>
         </div>
@@ -75,11 +107,20 @@ function BookingForm() {
       </div>
 
       {/* Button */}
-      <button className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition">
+      <button 
+       type="submit"
+       onClick={handleBookingSubmit}
+      
+      
+      
+      className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition">
         Book Now
       </button>
 
+<p>Nights: {x} </p>
+
     </div>
+    
   );
 }
 

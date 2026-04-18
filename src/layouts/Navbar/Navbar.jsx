@@ -87,7 +87,7 @@ function Navbar() {
 
       {/* ── Main Navbar ── */}
       <nav
-        className="sticky top-0 z-50 flex items-center justify-between px-10 font-jost"
+        className="sticky top-0 z-50 flex items-center justify-between px-10 font-jost text-amber-50"
         style={{
           background: "#1A1613",
           height: 68,
@@ -95,50 +95,13 @@ function Navbar() {
         }}
       >
         {/* Logo */}
-        <a
-          href="#"
+        <Link
+          to="/booking-form"
           className="flex items-center gap-2.5 no-underline flex-shrink-0"
         >
-          <div
-            className="flex items-center justify-center"
-            style={{ width: 36, height: 36, border: "1.5px solid #C9A84C" }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#C9A84C"
-              strokeWidth="1.5"
-            >
-              <path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M9 21v-6h6v6" />
-            </svg>
-          </div>
-          <div>
-            <span
-              className="font-cormorant block uppercase tracking-widest"
-              style={{
-                fontSize: 20,
-                fontWeight: 600,
-                color: "#F5F0E8",
-                letterSpacing: "2.5px",
-              }}
-            >
-              Grand
-            </span>
-            <span
-              className="font-jost block uppercase"
-              style={{
-                fontSize: 8.5,
-                letterSpacing: "4px",
-                color: "#C9A84C",
-                marginTop: 1,
-              }}
-            >
-              Collection
-            </span>
-          </div>
-        </a>
+         Booking
+         
+        </Link>
 
         {/* Desktop Links */}
         <ul className="hidden lg:flex items-center list-none gap-0 m-0 p-0">
