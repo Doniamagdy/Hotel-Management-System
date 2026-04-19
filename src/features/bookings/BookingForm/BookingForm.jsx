@@ -1,53 +1,66 @@
 import React, { useEffect, useState } from "react";
-import  {insertBookingDetails} from "../booking.service";
-
+import { insertBookingDetails } from "../booking.service";
+import { fetchRooms } from "../../rooms/rooms.service";
 
 function BookingForm() {
+  const [checkIn, setCheckIn] = useState("");
 
-const[checkIn , setCheckIn]= useState("")
+  const [checkOut, setCheckOut] = useState("");
 
-const[checkOut , setCheckOut]= useState("")
+  const [adultsCount, setAdultsCount] = useState(0);
 
-const[adultsCount , setAdultsCount]= useState(0)
+  const [childrenCount, setChildrenCount] = useState(0);
 
-const[childrenCount , setChildrenCount]= useState(0)
+  const [rooms, setRooms] = useState([]);
 
+  const guestId = localStorage.getItem("guestIdUsedInBooking");
 
-    function handleBookingSubmit(){
-    insertBookingDetails({checkIn, checkOut , adultsCount ,childrenCount})
+  useEffect(() => {
+    async function rr() {
+      const roomType = await fetchRooms();
+      console.log(roomType);
+      setRooms(roomType);
+      // const room = roomType?.map((room)=> room)
+      // console.log(room)
     }
 
-   function calcDays(checkout, checkin){
+    rr();
+  }, []);
 
-   
-    const reservationEndDay = new Date(checkout)
-    const reservationStartDay = new Date(checkin)
-     const accommodationDays =( reservationEndDay  - reservationStartDay) / (1000 * 60 * 60 * 24)
-   
-     const daysInHotel = Math.ceil(accommodationDays)
-     console.log(daysInHotel);
-     return daysInHotel
-   }
+  function handleBookingSubmit() {
+    insertBookingDetails({
+      checkIn,
+      checkOut,
+      adultsCount,
+      childrenCount,
+      bookingGuestId: guestId,
+    });
+  }
 
-   
- const x =  calcDays(checkOut, checkIn)
-  
-   
+  function calcDays(checkout, checkin) {
+    const reservationEndDay = new Date(checkout);
+    const reservationStartDay = new Date(checkin);
+    const accommodationDays =
+      (reservationEndDay - reservationStartDay) / (1000 * 60 * 60 * 24);
+
+    const daysInHotel = Math.ceil(accommodationDays);
+    console.log(`Nights: ${daysInHotel}`);
+    return daysInHotel;
+  }
+
+  const x = calcDays(checkOut, checkIn);
 
   return (
-  <div className="max-w-sm mx-auto mt-12 p-6 border border-gray-200 rounded-xl bg-white shadow-sm flex flex-col gap-4">
-
-      <h2 className="text-xl font-semibold text-center">
-        Book Your Stay
-      </h2>
+    <div className="max-w-sm mx-auto mt-12 p-6 border border-gray-200 rounded-xl bg-white shadow-sm flex flex-col gap-4">
+      <h2 className="text-xl font-semibold text-center">Book Your Stay</h2>
 
       {/* Room Selection */}
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Select Room</label>
         <select className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-          <option>Deluxe Room - $100/night</option>
-          <option>Standard Room - $70/night</option>
-          <option>Suite - $150/night</option>
+          {rooms?.map((room) => (
+            <option>{room}</option>
+          ))}
         </select>
       </div>
 
@@ -55,7 +68,9 @@ const[childrenCount , setChildrenCount]= useState(0)
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Check-in</label>
         <input
-          onChange={(e)=>{setCheckIn(e.target.value)}}
+          onChange={(e) => {
+            setCheckIn(e.target.value);
+          }}
           type="date"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
@@ -65,8 +80,9 @@ const[childrenCount , setChildrenCount]= useState(0)
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Check-out</label>
         <input
-        onChange={(e)=>{setCheckOut(e.target.value)}}
-
+          onChange={(e) => {
+            setCheckOut(e.target.value);
+          }}
           type="date"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
         />
@@ -76,25 +92,37 @@ const[childrenCount , setChildrenCount]= useState(0)
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Adults</label>
         <div className="flex items-center gap-3">
-          <button  onClick={()=> setAdultsCount( adultsCount - 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button
+            onClick={() => setAdultsCount(adultsCount - 1)}
+            className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100"
+          >
             -
           </button>
           <span className="text-base font-semibold">{adultsCount}</span>
-          <button onClick={()=> setAdultsCount( adultsCount + 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button
+            onClick={() => setAdultsCount(adultsCount + 1)}
+            className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100"
+          >
             +
           </button>
         </div>
       </div>
 
-       {/* Children */}
+      {/* Children */}
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Children</label>
         <div className="flex items-center gap-3">
-          <button  onClick={()=> setChildrenCount( childrenCount - 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button
+            onClick={() => setChildrenCount(childrenCount - 1)}
+            className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100"
+          >
             -
           </button>
           <span className="text-base font-semibold">{childrenCount}</span>
-          <button onClick={()=> setChildrenCount( childrenCount + 1)} className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100">
+          <button
+            onClick={() => setChildrenCount(childrenCount + 1)}
+            className="w-9 h-9 border border-gray-300 rounded-md bg-gray-100"
+          >
             +
           </button>
         </div>
@@ -107,20 +135,16 @@ const[childrenCount , setChildrenCount]= useState(0)
       </div>
 
       {/* Button */}
-      <button 
-       type="submit"
-       onClick={handleBookingSubmit}
-      
-      
-      
-      className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition">
+      <button
+        type="submit"
+        onClick={handleBookingSubmit}
+        className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition"
+      >
         Book Now
       </button>
 
-<p>Nights: {x} </p>
-
+      {/* <p>Nights: {x} </p> */}
     </div>
-    
   );
 }
 

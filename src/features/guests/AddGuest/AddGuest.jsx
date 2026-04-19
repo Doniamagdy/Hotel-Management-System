@@ -6,6 +6,12 @@ import Button from "../../../components/Button/Button";
 
 
 function AddGuest() {
+
+
+
+
+
+
   const handleSubmit = async () => {
     insertGuest({
       fullName,
