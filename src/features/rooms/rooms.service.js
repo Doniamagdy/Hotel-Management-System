@@ -3,12 +3,10 @@ import { supabase } from "../../supabaseClient";
 export const fetchRooms= async ()=>{
 
     const {data} = await supabase
-  .from('rooms')
+  .from('rooms_types')
   .select()
 
-  
-  const roomType = data?.map((roomType)=> roomType.room_name)
  
-  return roomType
+  return data
 }
 

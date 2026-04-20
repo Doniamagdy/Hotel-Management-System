@@ -8,7 +8,7 @@ export async function insertBookingDetails({
   bookingGuestId,
 }) {
   const { data, error } = await supabase
-    .from("booking")
+    .from("bookings")
     .insert({
       check_in_date: checkIn,
       check_out_date: checkOut,
