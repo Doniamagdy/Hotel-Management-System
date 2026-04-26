@@ -4,32 +4,57 @@ import img2 from "../../../assets/img2.avif";
 import img3 from "../../../assets/img3.avif";
 import img4 from "../../../assets/img1.avif";
 import { useEffect, useState } from "react";
-import { fetchSingleRoom } from "../rooms.service";
+import { fetchSingleRoom, fetchRoomAmenities } from "../rooms.service";
+import { getAllRooms, getBookedRooms } from "../../availability.service";
+import Button from "../../../components/Button/Button";
+import Input from "../../../components/Input/Input";
+
 function RoomDetails() {
   const { id } = useParams();
-  console.log(id);
-  
+  //   console.log(id);
+
   const [roomDetails, setRoomDetails] = useState({});
+  const [roomAmenities, setRoomAmenities] = useState([]);
 
   useEffect(() => {
     async function getRoomDetails() {
       const data = await fetchSingleRoom(id);
-      console.log(data);
-      setRoomDetails(data)
-      
+      //   console.log(data);
+      setRoomDetails(data);
     }
-    getRoomDetails()
+
+    async function getRoomAmenities() {
+      const data = await fetchRoomAmenities(id);
+      //   console.log(data);
+      setRoomAmenities(data);
+    }
+
+    // async function checkDate(){
+    //     const data = await checkRoomAvailability()
+    //     console.log(data);
+    // }
+
+    async function getRooms() {
+      const data = await getAllRooms();
+      // console.log(data);
+    }
+
+    async function getBookings() {
+      const data = await getBookedRooms("2026-04-29", "2026-05-09");
+      console.log(data);
+    }
+
+    getRoomDetails();
+    getRoomAmenities();
+    // checkDate()
+    getRooms();
+    getBookings();
   }, []);
 
-console.log(roomDetails);
+  //   console.log(roomDetails);
 
-
-   const rooms = {
-    
-    rating: 4.8,
-    reviews: 124,
-    images: [img1,img2,img3,img4,img3],
-    amenities: ["WiFi", "Pool", "Gym", "Spa", "Breakfast"],
+  const rooms = {
+    images: [img1, img2, img3, img4, img3],
     isAvailable: true,
   };
 
@@ -49,7 +74,6 @@ console.log(roomDetails);
               className="h-[200px] w-full object-cover rounded-xl"
             />
 
-        
             {i === 2 && (
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl text-white font-medium cursor-pointer">
                 View all photos
@@ -59,45 +83,39 @@ console.log(roomDetails);
         ))}
       </div>
 
-
-
-
       <div className="grid md:grid-cols-3 gap-10">
         {/* Left */}
         <div className="md:col-span-2 space-y-6">
           {/* Title */}
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">{roomDetails.room_name}</h1>
-
-            <div className="flex items-center gap-2 mt-2 text-sm text-gray-600">
-              <span className="bg-green-100 text-green-700 px-2 py-1 rounded-md">
-                ⭐ {rooms.rating}
-              </span>
-              <span>({rooms.reviews} reviews)</span>
-            </div>
+            <h1 className="text-3xl font-bold text-gray-800">
+              {roomDetails.room_name}
+            </h1>
           </div>
 
           {/* Highlights */}
           <div className="flex gap-3 flex-wrap">
-            {rooms.amenities.map((item, index) => (
+            {roomAmenities.map((item) => (
               <span
-                key={index}
+                key={item.id}
                 className="bg-gray-100 px-3 py-1 rounded-full text-sm"
               >
-                {item}
+                {item.room_amenities.name}
               </span>
             ))}
           </div>
 
           {/* Description */}
-          <p className="text-gray-600 leading-relaxed">{roomDetails.description}</p>
+          <p className="text-gray-600 leading-relaxed">
+            {roomDetails.description}
+          </p>
 
           {/* Extra Info */}
           <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
-            <p>🛏️ </p>
-            <p>👨‍👩‍👧 2 Adults, 1 Child</p>
-            <p>📶 Free WiFi</p>
-            <p>🌊 Sea View</p>
+            <p> {roomDetails.adults_capacity} adult</p>
+            <p> {roomDetails.children_capacity} child</p>
+            <p> {roomDetails.size} </p>
+            <p> {roomDetails.view} </p>
           </div>
         </div>
 
@@ -108,55 +126,24 @@ console.log(roomDetails);
             <span className="text-sm text-gray-500"> / night</span>
           </p>
 
-          <p
+          {/* <p
             className={`mt-2 text-sm font-medium ${
               rooms.isAvailable ? "text-green-600" : "text-red-500"
             }`}
           >
             {rooms.isAvailable ? "Available ✓" : "Not Available ✕"}
-          </p>
+          </p> */}
 
           {/* Date Inputs */}
           <div className="mt-4 grid grid-cols-2 gap-2">
-            <input type="date" className="border p-2 rounded-md" />
-            <input type="date" className="border p-2 rounded-md" />
-          </div>
-
-          {/* Guests */}
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <select className="border p-2 rounded-md">
-              <option>Adults</option>
-              <option>1</option>
-              <option>2</option>
-            </select>
-
-            <select className="border p-2 rounded-md">
-              <option>Children</option>
-              <option>0</option>
-              <option>1</option>
-            </select>
+            <Input type="date" />
+            <Input type="date" />
           </div>
 
           {/* CTA */}
-          <button
-            disabled={!rooms.isAvailable}
-            className={`mt-5 w-full py-3 rounded-lg font-medium transition ${
-              rooms.isAvailable
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-gray-300 text-gray-500"
-            }`}
-          >
-            Reserve Now
-          </button>
-
-          {/* small note */}
-          <p className="text-xs text-gray-500 mt-3 text-center">
-            You won’t be charged yet
-          </p>
+          <Button>Check Availability</Button>
         </div>
       </div>
-
-       
     </div>
   );
 }

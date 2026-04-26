@@ -12,7 +12,7 @@ function Header() {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* Center Text */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center">
