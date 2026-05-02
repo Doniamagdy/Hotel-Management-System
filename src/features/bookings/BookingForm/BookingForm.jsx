@@ -71,8 +71,8 @@ function BookingForm() {
       <div className="flex flex-col gap-1">
         <label className="text-sm font-medium">Select Room</label>
         <select className="w-full px-2 py-3 border border-gray-300 rounded-xl bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
-          {rooms?.map((room, index) => (
-            <option key={index}>{room.room_name}  {room.price_per_night}$</option>
+          {rooms?.map((room) => (
+            <option key={room.id}>{room.room_name}  {room.price_per_night}$</option>
           ))}
         </select>
       </div>

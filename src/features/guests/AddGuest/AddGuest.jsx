@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { insertGuest } from "./addGuest.service.js";
+import { insertGuest } from "../addGuest.service";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 

@@ -34,10 +34,4 @@ const { data, error } = await supabase
     return data
 }
 
-// export const checkRoomAvailability = async()=>{
-//   const {data } = await supabase .from('bookings').select(`check_in_date , check_out_date`)
-
-//   return data
-// }
-
 

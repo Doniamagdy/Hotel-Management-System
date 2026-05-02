@@ -5,53 +5,45 @@ import img3 from "../../../assets/img3.avif";
 import img4 from "../../../assets/img1.avif";
 import { useEffect, useState } from "react";
 import { fetchSingleRoom, fetchRoomAmenities } from "../rooms.service";
-import { getAllRooms, getBookedRooms } from "../../availability.service";
+import { checkRoomAvailability } from "../../availability/availability.service";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 
 function RoomDetails() {
   const { id } = useParams();
-  //   console.log(id);
 
   const [roomDetails, setRoomDetails] = useState({});
   const [roomAmenities, setRoomAmenities] = useState([]);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [availableRoom, setAvailableRooms] = useState(null);
 
   useEffect(() => {
     async function getRoomDetails() {
       const data = await fetchSingleRoom(id);
-      //   console.log(data);
       setRoomDetails(data);
     }
 
     async function getRoomAmenities() {
       const data = await fetchRoomAmenities(id);
-      //   console.log(data);
       setRoomAmenities(data);
-    }
-
-    // async function checkDate(){
-    //     const data = await checkRoomAvailability()
-    //     console.log(data);
-    // }
-
-    async function getRooms() {
-      const data = await getAllRooms();
-      // console.log(data);
-    }
-
-    async function getBookings() {
-      const data = await getBookedRooms("2026-04-29", "2026-05-09");
-      console.log(data);
     }
 
     getRoomDetails();
     getRoomAmenities();
-    // checkDate()
-    getRooms();
-    getBookings();
   }, []);
 
-  //   console.log(roomDetails);
+  const handleSubmitAvailabilityInputs = async (e) => {
+    e.preventDefault();
+    const data = await checkRoomAvailability(checkIn, checkOut, id);
+    console.log(data);
+    if (data.length > 0) {
+      setAvailableRooms(data);
+    } else {
+      setAvailableRooms([]);
+    }
+    
+  };
 
   const rooms = {
     images: [img1, img2, img3, img4, img3],
@@ -63,16 +55,14 @@ function RoomDetails() {
       {/* 🖼️ Gallery */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-10">
         <img
+          alt="kk"
           src={rooms.images[0]}
-          className="md:col-span-2 md:row-span-2 h-[420px] w-full object-cover rounded-xl"
+          className="md:col-span-2 md:row-span-2 h-105 w-full object-cover rounded-xl"
         />
 
         {rooms.images.slice(1, 5).map((img, i) => (
           <div key={i} className="relative">
-            <img
-              src={img}
-              className="h-[200px] w-full object-cover rounded-xl"
-            />
+            <img src={img} className="h-50 w-full object-cover rounded-xl" />
 
             {i === 2 && (
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl text-white font-medium cursor-pointer">
@@ -128,20 +118,32 @@ function RoomDetails() {
 
           {/* <p
             className={`mt-2 text-sm font-medium ${
-              rooms.isAvailable ? "text-green-600" : "text-red-500"
+              availableRooms ? "text-green-600" : "text-red-500"
             }`}
           >
-            {rooms.isAvailable ? "Available ✓" : "Not Available ✕"}
+            { availableRooms ? "Available ✓" : "Not Available ✕"}
           </p> */}
 
           {/* Date Inputs */}
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <Input type="date" />
-            <Input type="date" />
-          </div>
+          <form onSubmit={handleSubmitAvailabilityInputs}>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <Input type="date" onChange={(e) => setCheckIn(e.target.value)} />
+              <Input
+                type="date"
+                onChange={(e) => setCheckOut(e.target.value)}
+              />
+              <Button type="submit">Check Availability</Button>
+
+{availableRoom !== null && (
+  availableRoom.length > 0 ? (
+    <p>Room is available ✅</p>
+  ) : (
+    <p>Room is not available ❌</p>
+  )
+)}         </div>
+          </form>
 
           {/* CTA */}
-          <Button>Check Availability</Button>
         </div>
       </div>
     </div>
