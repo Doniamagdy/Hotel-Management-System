@@ -9,7 +9,7 @@ function MainLayout() {
   return (
    <>
     <Navbar/>
-    <Header/>
+    {/* <Header/> */}
     <Amenities />
     <main className='my-20 w-5/6 m-auto'>
         <Outlet />

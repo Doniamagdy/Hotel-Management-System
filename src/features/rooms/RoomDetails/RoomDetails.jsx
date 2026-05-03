@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import img1 from "../../../assets/img1.avif";
 import img2 from "../../../assets/img2.avif";
 import img3 from "../../../assets/img3.avif";
@@ -10,8 +10,8 @@ import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 
 function RoomDetails() {
+    
   const { id } = useParams();
-
   const [roomDetails, setRoomDetails] = useState({});
   const [roomAmenities, setRoomAmenities] = useState([]);
   const [checkIn, setCheckIn] = useState("");
@@ -42,7 +42,6 @@ function RoomDetails() {
     } else {
       setAvailableRooms([]);
     }
-    
   };
 
   const rooms = {
@@ -52,7 +51,7 @@ function RoomDetails() {
 
   return (
     <div className="px-6 md:px-12 py-10">
-      {/* 🖼️ Gallery */}
+{/* Gallery  */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-10">
         <img
           alt="kk"
@@ -74,7 +73,7 @@ function RoomDetails() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-10">
-        {/* Left */}
+{/* 1 */}
         <div className="md:col-span-2 space-y-6">
           {/* Title */}
           <div>
@@ -108,21 +107,19 @@ function RoomDetails() {
             <p> {roomDetails.view} </p>
           </div>
         </div>
-
-        {/* 💰 Booking Card */}
+{/* 2 */}
         <div className=" rounded-xl p-6 shadow-xl h-fit sticky top-24">
           <p className="text-2xl font-bold">
             ${roomDetails.price_per_night}
             <span className="text-sm text-gray-500"> / night</span>
           </p>
 
-          {/* <p
-            className={`mt-2 text-sm font-medium ${
-              availableRooms ? "text-green-600" : "text-red-500"
-            }`}
-          >
-            { availableRooms ? "Available ✓" : "Not Available ✕"}
-          </p> */}
+          {availableRoom !== null &&
+            (availableRoom.length > 0 ? (
+              <p className="text-green-600">Room is available</p>
+            ) : (
+              <p className="text-red-500">Room is not available </p>
+            ))}
 
           {/* Date Inputs */}
           <form onSubmit={handleSubmitAvailabilityInputs}>
@@ -134,18 +131,22 @@ function RoomDetails() {
               />
               <Button type="submit">Check Availability</Button>
 
-{availableRoom !== null && (
-  availableRoom.length > 0 ? (
-    <p>Room is available ✅</p>
-  ) : (
-    <p>Room is not available ❌</p>
-  )
-)}         </div>
+              {availableRoom === null ? null : (
+                <Link
+                  className="mt-4 px-4 text-center
+                   py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition disabled:opacity-50 cursor-pointer"
+                  to={`/booking/${id}`}
+                >
+                  Book Now
+                </Link>
+              )}
+            </div>
           </form>
 
-          {/* CTA */}
         </div>
+
       </div>
+
     </div>
   );
 }
