@@ -23,8 +23,8 @@ export async function insertBookingDetails({
   return data;
 }
 
-export const getRoomNameAndPriceById= async(id)=>{
-const {data} = await supabase .from("rooms_types").select("room_name, price_per_night").eq("id",id)
+export const getRoomDetailsById= async(id)=>{
+const {data} = await supabase .from("rooms_types").select("room_name, price_per_night,adults_capacity,children_capacity").eq("id",id)
 return data
 }
 
@@ -37,9 +37,7 @@ return data
     const reservationStartDay = new Date(checkin);
 
     const accommodationDays =( reservationEndDay - reservationStartDay ) / (1000 * 60 * 60 * 24);
-    const daysInHotel = Math.ceil(accommodationDays)
-    console.log(daysInHotel);
-    
+    const daysInHotel = Math.ceil(accommodationDays)    
 
     return daysInHotel;
 

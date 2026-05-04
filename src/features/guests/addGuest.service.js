@@ -21,7 +21,7 @@ export const insertGuest = async ({
     
     const guestID =  data.id
     console.log(guestID);
-    const guestIdUsedInBooking = localStorage.setItem('guestIdUsedInBooking' , guestID)
+    const guestIdUsedInBooking = sessionStorage.setItem('guestIdUsedInBooking' , guestID)
     
     return data 
 };

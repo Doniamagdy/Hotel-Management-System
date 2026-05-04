@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import {  Link , useParams } from "react-router-dom";
 import img1 from "../../../assets/img1.avif";
 import img2 from "../../../assets/img2.avif";
 import img3 from "../../../assets/img3.avif";
@@ -8,6 +8,7 @@ import { fetchSingleRoom, fetchRoomAmenities } from "../rooms.service";
 import { checkRoomAvailability } from "../../availability/availability.service";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
+
 
 function RoomDetails() {
     
@@ -36,7 +37,6 @@ function RoomDetails() {
   const handleSubmitAvailabilityInputs = async (e) => {
     e.preventDefault();
     const data = await checkRoomAvailability(checkIn, checkOut, id);
-    console.log(data);
     if (data.length > 0) {
       setAvailableRooms(data);
     } else {
@@ -124,18 +124,23 @@ function RoomDetails() {
           {/* Date Inputs */}
           <form onSubmit={handleSubmitAvailabilityInputs}>
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <Input type="date" onChange={(e) => setCheckIn(e.target.value)} />
+
+              <Input 
+              type="date"
+              onChange={(e) => setCheckIn(e.target.value)} 
+              />
+
               <Input
                 type="date"
                 onChange={(e) => setCheckOut(e.target.value)}
               />
+
               <Button type="submit">Check Availability</Button>
 
               {availableRoom === null ? null : (
-                <Link
+                <Link to={`/booking/${id}/${checkIn}/${checkOut}` }
                   className="mt-4 px-4 text-center
                    py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition disabled:opacity-50 cursor-pointer"
-                  to={`/booking/${id}`}
                 >
                   Book Now
                 </Link>

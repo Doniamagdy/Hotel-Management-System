@@ -4,8 +4,9 @@ import AddGuest from '../../guests/AddGuest/AddGuest'
 function Booking() {
   return (
     <div className='flex justify-between'>
+      <AddGuest />
+
     <BookingForm/>
-    <AddGuest />
     </div>
   )
 }

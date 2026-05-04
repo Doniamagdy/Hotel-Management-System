@@ -25,13 +25,13 @@ function App() {
       <Route index  element={<Home />}/>
       <Route path="add-guest" element={<AddGuest />} />
       <Route path="fetch-guest" element={<FetchGuest />} />
-      <Route path="booking/:id" element={<Booking/>} />
+      <Route path="booking/:id/:checkIn/:checkOut" element={<Booking/>} />
       <Route path="room-details/:id" element={<RoomDetails />} />
 
       </Route>
     </Routes>
 
-    <ToastContainer position="top-right"  />
+<ToastContainer/>
 </>
   );
 }
