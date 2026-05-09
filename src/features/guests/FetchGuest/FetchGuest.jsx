@@ -1,6 +1,6 @@
 import React , { useEffect, useState } from 'react'
 
-import { getGuestName } from "../fetchGuest.service"
+import { getGuestName } from "../../../services/fetchGuest.service"
 
 function FetchGuest() {
 

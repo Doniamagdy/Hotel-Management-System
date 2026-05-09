@@ -1,17 +1,19 @@
-import {  Link , useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import img1 from "../../../assets/img1.avif";
 import img2 from "../../../assets/img2.avif";
 import img3 from "../../../assets/img3.avif";
 import img4 from "../../../assets/img1.avif";
 import { useEffect, useState } from "react";
-import { fetchSingleRoom, fetchRoomAmenities } from "../rooms.service";
-import { checkRoomAvailability } from "../../availability/availability.service";
+import {
+  fetchSingleRoom,
+  fetchRoomAmenities,
+  
+} from "../../../services/rooms.service";
+import { checkRoomAvailability } from "../../../services/availability.service";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 
-
 function RoomDetails() {
-    
   const { id } = useParams();
   const [roomDetails, setRoomDetails] = useState({});
   const [roomAmenities, setRoomAmenities] = useState([]);
@@ -25,12 +27,15 @@ function RoomDetails() {
       setRoomDetails(data);
     }
 
+    getRoomDetails();
+  }, []);
+
+  useEffect(() => {
     async function getRoomAmenities() {
       const data = await fetchRoomAmenities(id);
       setRoomAmenities(data);
     }
 
-    getRoomDetails();
     getRoomAmenities();
   }, []);
 
@@ -49,9 +54,10 @@ function RoomDetails() {
     isAvailable: true,
   };
 
+ 
   return (
     <div className="px-6 md:px-12 py-10">
-{/* Gallery  */}
+      {/* Gallery  */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-10">
         <img
           alt="kk"
@@ -73,7 +79,7 @@ function RoomDetails() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-10">
-{/* 1 */}
+        {/* 1 */}
         <div className="md:col-span-2 space-y-6">
           {/* Title */}
           <div>
@@ -107,7 +113,7 @@ function RoomDetails() {
             <p> {roomDetails.view} </p>
           </div>
         </div>
-{/* 2 */}
+        {/* 2 */}
         <div className=" rounded-xl p-6 shadow-xl h-fit sticky top-24">
           <p className="text-2xl font-bold">
             ${roomDetails.price_per_night}
@@ -124,11 +130,7 @@ function RoomDetails() {
           {/* Date Inputs */}
           <form onSubmit={handleSubmitAvailabilityInputs}>
             <div className="mt-4 grid grid-cols-2 gap-2">
-
-              <Input 
-              type="date"
-              onChange={(e) => setCheckIn(e.target.value)} 
-              />
+              <Input type="date" onChange={(e) => setCheckIn(e.target.value)} />
 
               <Input
                 type="date"
@@ -138,7 +140,8 @@ function RoomDetails() {
               <Button type="submit">Check Availability</Button>
 
               {availableRoom === null ? null : (
-                <Link to={`/booking/${id}/${checkIn}/${checkOut}` }
+                <Link
+                  to={`/booking/${id}/${checkIn}/${checkOut}`}
                   className="mt-4 px-4 text-center
                    py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition disabled:opacity-50 cursor-pointer"
                 >
@@ -147,11 +150,8 @@ function RoomDetails() {
               )}
             </div>
           </form>
-
         </div>
-
       </div>
-
     </div>
   );
 }

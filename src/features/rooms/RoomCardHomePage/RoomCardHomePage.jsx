@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { fetchRooms } from "../rooms.service";
+import { fetchRooms } from "../../../services/rooms.service";
 import { Link } from "react-router-dom";
 
 

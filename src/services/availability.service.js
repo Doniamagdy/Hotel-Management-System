@@ -1,4 +1,4 @@
-import { supabase } from "../../supabaseClient";
+import { supabase } from "../supabaseClient";
 
 export const checkRoomAvailability = async (checkInDay, checkOutDay , typeId) => {
 
@@ -19,9 +19,9 @@ export const checkRoomAvailability = async (checkInDay, checkOutDay , typeId) =>
   (room) => !booked_Room_id.includes(room.id) && room.room_type_id === Number(typeId)
 );
 
+
 return availableRooms
   
-
 }
 
 

@@ -17,7 +17,6 @@ function Navbar() {
 
         {/* Desktop Links */}
         <ul className="hidden lg:flex items-center gap-6 text-sm uppercase tracking-widest text-white/70">
-          <li><Link to="/add-guest" className="hover:text-yellow-400">Add Guest</Link></li>
           <li><Link to="/fetch-guest" className="hover:text-yellow-400">Fetch Guest</Link></li>
           <li><Link to="#" className="hover:text-yellow-400">Rooms</Link></li>
           <li><Link to="#" className="hover:text-yellow-400">About</Link></li>
