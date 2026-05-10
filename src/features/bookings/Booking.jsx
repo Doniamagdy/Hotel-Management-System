@@ -79,9 +79,9 @@ function Booking() {
             <Input
               label="National ID"
               placeholder="ID Number"
-              value={guestInfo.nationalID}
+              value={guestInfo.guestNationalId}
               onChange={(e) =>
-                setGuestInfo({ ...guestInfo, nationalID: e.target.value })
+                setGuestInfo({ ...guestInfo, guestNationalId: e.target.value })
               }
             />
           </div>

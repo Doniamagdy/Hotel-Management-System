@@ -22,7 +22,7 @@ const navigate = useNavigate()
     email: "",
     phone: "",
     nationality: "",
-    nationalID: "",
+    guestNationalId: "",
   });
 
   const [totalPrice, setTotalPrice] = useState(0);
@@ -65,7 +65,7 @@ const navigate = useNavigate()
       phone: guestInfo.phone,
       email: guestInfo.email,
       nationality: guestInfo.nationality,
-      nationalID: guestInfo.nationalID ,
+      guestNationalId: guestInfo.guestNationalId ,
     });
 
     
@@ -89,7 +89,7 @@ const navigate = useNavigate()
 
     if (guestId) {
       async function relationBetweenTables() {
-        const data = await allocateRoomForBooking(guestId,id);
+        const data = await allocateRoomForBooking(guestId,id,checkIn, checkOut);
         console.log(data);
       }
       relationBetweenTables();

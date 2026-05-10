@@ -1,5 +1,9 @@
 import { supabase } from "../supabaseClient";
 
+import {checkRoomAvailability} from "./availability.service"
+
+
+  
 
 export const insertBookingDetails = async ({
   roomType,
@@ -25,7 +29,7 @@ export const insertBookingDetails = async ({
   return data;
 };
 
-export const allocateRoomForBooking = async (guestId , id) => {
+export const allocateRoomForBooking = async (guestId , typeId ,checkIn, checkOut) => {
   //1
   const { data: tableOne } = await supabase
     .from("bookings")
@@ -33,13 +37,13 @@ export const allocateRoomForBooking = async (guestId , id) => {
     .eq("booking_guest_id", guestId)
     .single();
  
+    const bookingId = sessionStorage.setItem("bookingID",tableOne.id)
+    console.log(bookingId);
+    
 // 2
- const { data } = await supabase
-    .from("rooms")
-    .select("id, room_number")
-    .eq("room_type_id", id);
+  const availableRooms = await checkRoomAvailability(checkIn, checkOut, typeId)
 
-  const firstEmptyRoomID = data[0].id
+  const firstEmptyRoomID = availableRooms[0].id
 
 //3
   const { data: tableTwo } = await supabase
@@ -47,7 +51,7 @@ export const allocateRoomForBooking = async (guestId , id) => {
     .insert({ booking_id: tableOne.id , room_id:firstEmptyRoomID})
     .select();
 
-  return tableTwo;
+  return {tableTwo , bookingId}
 };
 
 export const getRoomDetailsById = async (id) => {

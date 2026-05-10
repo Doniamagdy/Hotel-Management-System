@@ -13,13 +13,12 @@ export const checkRoomAvailability = async (checkInDay, checkOutDay , typeId) =>
   const booked_Room_id = bookedRooms.flatMap((booking) =>
   booking.booking_rooms.map((r) => r.room_id))
   
-  console.log(booked_Room_id);
 
   const availableRooms = allRooms.filter(
   (room) => !booked_Room_id.includes(room.id) && room.room_type_id === Number(typeId)
 );
 
-
+console.log(availableRooms)
 return availableRooms
   
 }

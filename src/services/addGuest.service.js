@@ -5,7 +5,7 @@ export const insertGuest = async ({
   phone,
   email,
   nationality,
-  guest_national_id,
+  guestNationalId,
 }) => {
   const { data } = await supabase
     .from("guests")
@@ -14,7 +14,7 @@ export const insertGuest = async ({
       guest_phone_number: phone,
       guest_email: email,
       guest_nationality: nationality,
-      guest_national_id: guest_national_id,
+      guest_national_id:guestNationalId,
     })
     .select()
     .single();
