@@ -7,7 +7,8 @@ export const insertGuest = async ({
   nationality,
   guestNationalId,
 }) => {
-  const { data } = await supabase
+
+  const { data , error } = await supabase
     .from("guests")
     .insert({
       guest_full_name: fullName,
@@ -22,5 +23,9 @@ export const insertGuest = async ({
 
   const guestID = data.id;
 
-  return data;
+  if(error){
+    throw new Error(error.message)
+  }
+
+  return data ;
 };

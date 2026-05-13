@@ -2,6 +2,7 @@ import React , { useEffect, useState } from 'react'
 
 import { getGuestName } from "../../../services/fetchGuest.service"
 
+
 function FetchGuest() {
 
 const [guestName, setIGuestName] = useState([]);
@@ -9,12 +10,18 @@ const [guestName, setIGuestName] = useState([]);
 
  useEffect(() => {
 
-    const x = async ()=> {
-       const data = await getGuestName()
+    const fetchGuestName = async ()=> {
+      try{
+const data = await getGuestName()
        setIGuestName(data)
+      }catch(error){
+console.log(error);
+
+      }
+       
     }
 
-x()
+fetchGuestName()
     
   }, []);
 

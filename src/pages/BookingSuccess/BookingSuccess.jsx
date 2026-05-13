@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { successfulMessage } from "../../services/bookingMsg.service.js";
-import {allocateRoomForBooking} from "../../services/booking.service.js"
+import { notify } from "../../utils/utils.js";
 function BookingSuccess() {
-  const bookingId = sessionStorage.getItem("bookingID")
-  const [confirmationBookedDetails , setConfirmationBookedDetails]=useState()
+
+  const bookingId = sessionStorage.getItem("bookingID");
+  const [confirmationBookedDetails, setConfirmationBookedDetails] = useState();
+
 
   useEffect(() => {
     const message = async () => {
-      const data = await successfulMessage(bookingId);
-      setConfirmationBookedDetails(data[0])
+
+      try {
+        const data = await successfulMessage(bookingId);
+
+        if(data?.length){
+        setConfirmationBookedDetails(data[0]);
+
+        }
+      } catch (error) {
+        console.log(error.message);
+        
+        notify("Unable to load booking details");
+      }
     };
     message();
-  }, []);
+  }, [bookingId]);
 
 
   return (
@@ -32,7 +45,9 @@ function BookingSuccess() {
       <div className="space-y-4 text-gray-700">
         <div className="flex justify-between">
           <span className="font-medium">Booking ID</span>
-          <span className="text-gray-900">{confirmationBookedDetails?.booking_id}</span>
+          <span className="text-gray-900">
+            {confirmationBookedDetails?.booking_id}
+          </span>
         </div>
 
         <div className="flex justify-between">
@@ -48,15 +63,18 @@ function BookingSuccess() {
 
       {/* Room Preview Card */}
       <div className="mt-6 bg-gray-50 rounded-xl p-4 border">
-        <h3 className="text-lg font-semibold text-gray-800">Deluxe Room</h3>
-         <h4>Room No:{confirmationBookedDetails?.rooms?.room_number}</h4>
+        <h4>Room No:{confirmationBookedDetails?.rooms?.room_number}</h4>
         <div className="mt-2 text-sm text-gray-600 space-y-1">
-
           <p>Check-in: {confirmationBookedDetails?.bookings?.check_in_date}</p>
-          <p>Check-out: {confirmationBookedDetails?.bookings?.check_out_date}</p>
-          <p>Guests: {confirmationBookedDetails?.bookings?.adults_count} adult</p>
-          <p>Guests: {confirmationBookedDetails?.bookings?.children_count} child</p>
-
+          <p>
+            Check-out: {confirmationBookedDetails?.bookings?.check_out_date}
+          </p>
+          <p>
+            Guests: {confirmationBookedDetails?.bookings?.adults_count} adult
+          </p>
+          <p>
+            Guests: {confirmationBookedDetails?.bookings?.children_count} child
+          </p>
         </div>
       </div>
 

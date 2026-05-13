@@ -1,19 +1,21 @@
 import { supabase } from "../supabaseClient";
 
 export const fetchRooms = async () => {
-  const { data } = await supabase.from("rooms_types").select();
+  const { data , error} = await supabase.from("rooms_types").select();
 
+  if(error){ throw new Error(error.message)}
   return data;
 };
 
 export const fetchSingleRoom = async (id) => {
-  const { data } = await supabase
+  const { data , error } = await supabase
     .from("rooms_types")
     .select("*")
     .eq("id", id)
     .single();
 
-  console.log(data);
+    if(error){ throw new Error(error.message)}
+
 
   return data;
 };
@@ -30,5 +32,8 @@ export const fetchRoomAmenities = async (id) => {
     `,
     )
     .eq("room_type_id", id);
+
+      if(error){ throw new Error(error.message)}
+
   return data;
 };

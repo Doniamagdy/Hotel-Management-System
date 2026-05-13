@@ -12,6 +12,7 @@ import {
 import { checkRoomAvailability } from "../../../services/availability.service";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
+import {notify} from "../../../utils/utils"
 
 function RoomDetails() {
   const { id } = useParams();
@@ -41,12 +42,20 @@ function RoomDetails() {
 
   const handleSubmitAvailabilityInputs = async (e) => {
     e.preventDefault();
-    const data = await checkRoomAvailability(checkIn, checkOut, id);
+    try{
+   const data = await checkRoomAvailability(checkIn, checkOut, id);
     if (data.length > 0) {
       setAvailableRooms(data);
     } else {
       setAvailableRooms([]);
     }
+
+    }catch(error){
+      console.log(error);
+      
+     notify("Error, please check the dates")
+    }
+ 
   };
 
   const rooms = {
