@@ -51,8 +51,6 @@ function RoomDetails() {
     }
 
     }catch(error){
-      console.log(error);
-      
      notify("Error, please check the dates")
     }
  
@@ -65,18 +63,18 @@ function RoomDetails() {
 
  
   return (
-    <div className="px-6 md:px-12 py-10">
+    <div className="px-4 md:px-12 py-10">
       {/* Gallery  */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-10">
         <img
           alt="kk"
           src={rooms.images[0]}
-          className="md:col-span-2 md:row-span-2 h-105 w-full object-cover rounded-xl"
+          className="w-full h-72 md:h-[420px] md:col-span-2 md:row-span-2 object-cover rounded-xl"
         />
 
         {rooms.images.slice(1, 5).map((img, i) => (
           <div key={i} className="relative">
-            <img src={img} className="h-50 w-full object-cover rounded-xl" />
+            <img src={img} className="w-full h-52 object-cover rounded-xl" />
 
             {i === 2 && (
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl text-white font-medium cursor-pointer">
@@ -87,7 +85,7 @@ function RoomDetails() {
         ))}
       </div>
 
-      <div className="grid md:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* 1 */}
         <div className="md:col-span-2 space-y-6">
           {/* Title */}
@@ -123,7 +121,7 @@ function RoomDetails() {
           </div>
         </div>
         {/* 2 */}
-        <div className=" rounded-xl p-6 shadow-xl h-fit sticky top-24">
+        <div className="rounded-xl p-6 shadow-xl h-fit lg:sticky lg:top-24">
           <p className="text-2xl font-bold">
             ${roomDetails.price_per_night}
             <span className="text-sm text-gray-500"> / night</span>
@@ -138,7 +136,7 @@ function RoomDetails() {
 
           {/* Date Inputs */}
           <form onSubmit={handleSubmitAvailabilityInputs}>
-            <div className="mt-4 grid grid-cols-2 gap-2">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <Input type="date" onChange={(e) => setCheckIn(e.target.value)} />
 
               <Input

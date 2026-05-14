@@ -27,18 +27,18 @@ function Booking() {
   } = useReservation();
 
   return (
-    <div className="w-4xl mx-auto  p-6 bg-white rounded-2xl shadow ">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-2xl shadow">
       {/* Room Details */}
-      <div className="flex justify-between  text-3xl text-red-500 my-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-2 text-2xl sm:text-3xl text-red-500 my-4">
         <h3>{roomDetails[0]?.room_name}</h3>
         <h3>{roomDetails[0]?.price_per_night}$</h3>
       </div>
 
-      <div className="grid grid-cols-2 gap-14">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-14">
 
         <div>
           {/* Guest Info */}
-          <div className="mt-4 space-y-4">
+          <div className="space-y-4">
             {/* First Name */}
             <Input
               label="FullName"
@@ -87,9 +87,9 @@ function Booking() {
           </div>
         </div>
 
-        <div className="mt-4 space-y-4">
+        <div className="space-y-4">
           {/* Check-in */}
-          <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">
               Check-in
               <Input readOnly defaultValue={checkIn} />
@@ -103,6 +103,8 @@ function Booking() {
               <Input readOnly defaultValue={checkOut} />
             </label>
           </div>
+
+
 
           {/* Adults */}
           <div className="grid grid-cols-2 gap-1 ">
@@ -169,7 +171,7 @@ function Booking() {
           </div>
 
           {/* Total Price */}
-          <div className="mt-2 p-3 bg-gray-50 rounded-lg flex justify-between text-base">
+          <div className="p-3 bg-gray-50 rounded-lg flex justify-between text-sm sm:text-base">
             <span>Total price of {nightsCountInHotel} nights.</span>
             <span className="font-semibold">{totalPrice}$</span>
           </div>
@@ -178,7 +180,7 @@ function Booking() {
           <Button
             type="submit"
             onClick={handleBookingSubmit}
-            className="mt-3 py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition"
+            className="w-full py-3 rounded-lg bg-black text-white text-base font-medium hover:bg-gray-800 transition"
           >
             Book Now
           </Button>
